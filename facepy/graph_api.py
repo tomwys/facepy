@@ -257,6 +257,8 @@ class GraphAPI(object):
                         verify=self.verify_ssl_certificate, timeout=self.timeout)
                 if response.status_code == 500:
                     raise FacebookError("Internal Facebook error ocurred.")
+                if response.status_code != 200:
+                    raise HTTPError('Got invalid status_code %s.' % response.status_code)
             except requests.RequestException as exception:
                 raise HTTPError(exception)
 

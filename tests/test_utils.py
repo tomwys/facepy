@@ -23,6 +23,7 @@ def unmock():
 @with_setup(mock, unmock)
 def test_get_extended_access_token():
     mock_request.return_value.content = 'access_token=<extended access token>&expires=5183994'
+    mock_request.return_value.status_code = 200
 
     access_token, expires_at = get_extended_access_token(
         '<access token>',
@@ -51,6 +52,7 @@ def test_get_extended_access_token():
 @with_setup(mock, unmock)
 def test_get_extended_access_token_no_expiry():
     mock_request.return_value.content = 'access_token=<extended access token>'
+    mock_request.return_value.status_code = 200
 
     access_token, expires_at = get_extended_access_token(
         '<access token>',
@@ -78,6 +80,7 @@ def test_get_extended_access_token_no_expiry():
 @with_setup(mock, unmock)
 def test_get_application_access_token():
     mock_request.return_value.content = 'access_token=...'
+    mock_request.return_value.status_code = 200
 
     access_token = get_application_access_token('<application id>', '<application secret key>')
 
@@ -100,6 +103,7 @@ def test_get_application_access_token():
 @with_setup(mock, unmock)
 def test_get_application_access_token_raises_error():
     mock_request.return_value.content = 'An unknown error occurred'
+    mock_request.return_value.status_code = 200
 
     assert_raises(
         GraphAPI.FacebookError,
